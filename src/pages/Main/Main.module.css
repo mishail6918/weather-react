@@ -1,0 +1,11 @@
+.weather {
+  padding: 50px 0;
+}
+.weather__title {
+  font-size: 18px;
+  margin-bottom: 40px;
+}
+.weather__city {
+  font-size: 21px;
+  font-weight: 700;
+}
