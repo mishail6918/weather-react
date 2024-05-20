@@ -1,19 +1,15 @@
 import style from "./Main.module.css";
 import { useWeatherStore } from "../../stores/useWeatherStore";
-import { useEffect } from "react";
 import { WeatherMain } from "../../components/WeatherMain/WeatherMain";
+import { ForecastSlider } from "../../components/ForecastSlider/ForecastSlider";
 
 export const Main = () => {
   const { currentWeather } = useWeatherStore();
 
-  useEffect(() => {
-    console.log(currentWeather);
-  }, [currentWeather]);
-
   return (
     <>
       <div className={style.weather}>
-        {currentWeather && (
+        {currentWeather ? (
           <>
             <div className={style.weather__title}>
               <span className={style.weather__city}>{currentWeather.name}</span>
@@ -21,8 +17,11 @@ export const Main = () => {
             </div>
             <div className="weather__content">
               <WeatherMain currentWeather={currentWeather} />
+              <ForecastSlider />
             </div>
           </>
+        ) : (
+          <h2>Произошла ошибка при получении данных о погоде</h2>
         )}
       </div>
     </>

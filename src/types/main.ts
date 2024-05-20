@@ -30,5 +30,5 @@ export type WeatherConfig = {
 };
 
 export type forecastWeatherConfig = {
-  list: forecastList;
+  list: forecastList[];
 };
