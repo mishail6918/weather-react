@@ -47,14 +47,21 @@ export const WeatherMain: FC<WeatherMain> = ({ currentWeather }) => {
     const date = new Date(timestamp * 1000);
     const hours = date.getHours();
     const minutes = date.getMinutes();
-    return (hours < 10 ? "0" : "") + hours + ":" + minutes;
+    return (
+      (hours < 10 ? "0" : "") +
+      hours +
+      ":" +
+      (minutes < 10 ? "0" : "") +
+      minutes
+    );
   }, [currentWeather.sys.sunset]);
 
   const lengthDay = useMemo(() => {
-    const timestamp = currentWeather.sys.sunset - currentWeather.sys.sunrise;
-    const date = new Date(timestamp * 1000);
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
+    const sunriseDate = new Date(currentWeather.sys.sunrise * 1000);
+    const sunsetDate = new Date(currentWeather.sys.sunset * 1000);
+    const diff = sunsetDate.getTime() - sunriseDate.getTime();
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
     return (hours < 10 ? "0" : "") + hours + ":" + minutes;
   }, [currentWeather.sys.sunrise, currentWeather.sys.sunset]);
 
@@ -110,7 +117,7 @@ export const WeatherMain: FC<WeatherMain> = ({ currentWeather }) => {
                 {sunrise}
               </div>
               <div className={`${style.sun__item} ${style["length-day"]}`}>
-                Долгота дня: {lengthDay}
+                Световой день: {lengthDay && lengthDay}
               </div>
               <div className={style.sun__item}>
                 <img src="./src/assets/sunset.png" alt="" />

@@ -1,32 +1,53 @@
-import { useEffect, useRef } from "react";
-import Swiper from "swiper";
-import "swiper/swiper-bundle.css";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import style from "./ForecastSlider.module.css";
 import { useWeatherStore } from "../../stores/useWeatherStore";
+import { Mousewheel } from "swiper/modules";
 
 export const ForecastSlider = () => {
-  const swiperRef = useRef(null);
   const { hourlyWeather } = useWeatherStore();
-  console.log(hourlyWeather);
-  useEffect(() => {
-    if (swiperRef.current) {
-      new Swiper(swiperRef.current, {
-        slidesPerView: 3,
-        spaceBetween: 20,
-      });
-    }
-  }, []);
+  const dayNames = [
+    "Воскресенье",
+    "Понедельник",
+    "Вторник",
+    "Среда",
+    "Четверг",
+    "Пятница",
+    "Суббота",
+  ];
   return (
     <>
-      {/* <div ref={swiperRef} className="swiper-container">
-        <div className="swiper-wrapper">
-          {hourlyWeather &&
-            hourlyWeather.map((slide, index) => (
-              <div key={index} className="swiper-slide">
-                {slide.name}
+      <Swiper
+        className={style["forecast-slider"]}
+        spaceBetween={30}
+        slidesPerView={5}
+        modules={[Mousewheel]}
+        mousewheel={{ releaseOnEdges: true, enabled: true }}
+      >
+        {!!hourlyWeather &&
+          hourlyWeather.list.map((slide) => (
+            <SwiperSlide className={style["forecast-slider__item"]}>
+              <div className={style.item__weather}>
+                <div className={style.temp}>
+                  <h3 className={style.temp__degree}>
+                    {Math.round(slide.main.temp)}
+                  </h3>
+                </div>
+                <div className={style.item__image}>
+                  <img
+                    src={`https://openweathermap.org/img/wn/${slide.weather[0].icon}.png`}
+                    alt=""
+                  />
+                </div>
               </div>
-            ))}
-        </div>
-      </div> */}
+              <small>{dayNames[new Date(slide.dt_txt).getDay()]}</small>
+              <div className={style.item__date}>
+                <p>{slide.dt_txt.substring(11, 16)}</p>
+                <small>{slide.dt_txt.substring(0, 10)}</small>
+              </div>
+            </SwiperSlide>
+          ))}
+      </Swiper>
     </>
   );
 };

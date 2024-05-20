@@ -75,8 +75,7 @@
     width: 55%;
     height: 100%;
     background: rgb(250, 133, 89);
-    background: radial-gradient(
-      circle,
+    background: linear-gradient(
       rgba(250, 133, 89, 0.6) 13%,
       rgba(255, 197, 174, 0.5) 45%,
       rgba(150, 165, 233, 0.5) 100%
@@ -108,7 +107,7 @@
         width: 240px;
         height: 2px;
         transform: translateY(-50%);
-        border-bottom: 3px dashed #5465fc;
+        border-bottom: 3px dashed #707efa;
       }
     }
     .length-day {

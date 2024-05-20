@@ -1,11 +1,11 @@
 import { create } from "zustand";
-import { WeatherConfig } from "../types/main";
+import { WeatherConfig, forecastWeatherConfig } from "../types/main";
 
 type State = {
   status: "idle" | "loading" | "success" | "error";
   error: object;
   currentWeather: WeatherConfig | null;
-  hourlyWeather: WeatherConfig[] | null;
+  hourlyWeather: forecastWeatherConfig | null;
 };
 
 type Actions = {
