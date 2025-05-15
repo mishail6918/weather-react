@@ -1,6 +1,14 @@
 import { FC, useMemo } from "react";
 import { WeatherConfig } from "../../types/main";
 import style from "./WeatherMain.module.css";
+import sunsetImage from "../../assets/sunset.png";
+import sunriseImage from "../../assets/sunrise.png";
+import Clear from "../../assets/bg-videos/Clear.mp4";
+import Rain from "../../assets/bg-videos/Rain.mp4";
+import Clouds from "../../assets/bg-videos/Clouds.mp4";
+import Snow from "../../assets/bg-videos/Snow.mp4";
+import ClearEve from "../../assets/bg-videos/Clear_evening.mp4";
+import ClearMorning from "../../assets/bg-videos/Clear_morning.mp4";
 
 interface WeatherMain {
   currentWeather: WeatherConfig;
@@ -65,12 +73,21 @@ export const WeatherMain: FC<WeatherMain> = ({ currentWeather }) => {
     return (hours < 10 ? "0" : "") + hours + ":" + minutes;
   }, [currentWeather.sys.sunrise, currentWeather.sys.sunset]);
 
+  const videoMap: Record<string, string> = {
+    Clear,
+    Rain,
+    Clouds,
+    Snow,
+    ClearEve,
+    ClearMorning,
+  };
+
   return (
     <>
       <div className={style.main}>
         <div className={style.main__video}>
           <video
-            src={`./src/assets/bg-videos/${currentWeather.weather[0].main}.mp4`}
+            src={videoMap[currentWeather.weather[0].main]}
             autoPlay
             loop
             muted
@@ -113,14 +130,14 @@ export const WeatherMain: FC<WeatherMain> = ({ currentWeather }) => {
           <div className={`${style.sun}`}>
             <div className={style.sun__block}>
               <div className={style.sun__item}>
-                <img src="./src/assets/sunrise.png" alt="" />
+                <img src={sunriseImage} alt="" />
                 {sunrise}
               </div>
               <div className={`${style.sun__item} ${style["length-day"]}`}>
                 Световой день: {lengthDay && lengthDay}
               </div>
               <div className={style.sun__item}>
-                <img src="./src/assets/sunset.png" alt="" />
+                <img src={sunsetImage} alt="" />
                 {sunset}
               </div>
             </div>

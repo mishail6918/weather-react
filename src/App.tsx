@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, HashRouter } from "react-router-dom";
 import { allRoutes } from "./routes";
 import "./App.css";
 import { WrapperPage } from "./pages/WrapperPage";
@@ -7,7 +7,7 @@ import { NotFound } from "./pages/NotFound";
 function App() {
   return (
     <>
-      <BrowserRouter>
+      <HashRouter>
         <Routes>
           {allRoutes.map((route) => (
             <Route
@@ -19,7 +19,7 @@ function App() {
           <Route path="notfound" element={<NotFound />} />
           <Route path="*" element={<Navigate to="notfound" replace />} />
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </>
   );
 }
